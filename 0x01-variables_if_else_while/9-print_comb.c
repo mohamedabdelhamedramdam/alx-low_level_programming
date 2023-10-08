@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 /**
  * main - Entry point of the program
  *
@@ -9,13 +10,16 @@
  */
 int main(void)
 {
-	int a;
+	int n;
 
-	for (a = 48; a <= 57; a++)
+	for (n = '0'; n <= '9'; n++)
 	{
-		putchar(a);
+		putchar(n);
+		if (n != '9')
+		{
 		putchar(',');
 		putchar(' ');
+		}
 	}
 	putchar('\n');
 	return (0);
