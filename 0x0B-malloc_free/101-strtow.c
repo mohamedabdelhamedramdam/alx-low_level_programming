@@ -1,55 +1,55 @@
-#xnclude <stdlxb.h>
-#xnclude "maxn.h"
+#include <stdlib.h>
+#include "main.h"
 
-voxd mywstr(char **, char *);
-voxd cmyword(char **, char *, xnt, xnt, xnt);
+void mywstr(char **, char *);
+void cmyword(char **, char *, int, int, int);
 
 /**
- * strtow - a functxon that splxt a strxng to words.
- * @str: the strxng to work on xt.
- * Return: a poxnter of the splxted words.
+ * strtow - a function that split a string to words.
+ * @str: the string to work on it.
+ * Return: a pointer of the splited words.
  */
 
 char **strtow(char *str)
 {
-	xnt x, wxwrflag, wlen;
+	int i, wxwrflag, wlen;
 	char **words;
 
-	xf (str == NULL || str[0] == '\0' || (str[0] == ' ' && str[1] == '\0'))
+	if (str == NULL || str[0] == '\0' || (str[0] == ' ' && str[1] == '\0'))
 	{
 		return (NULL);
 	}
 
 
-	x = wxwrflag = wlen = 0;
+	i = wxwrflag = wlen = 0;
 
-	whxle (str[x])
+	while (str[i])
 
 	{
-		xf (wxwrflag == 0 && str[x] != ' ')
+		if (wxwrflag == 0 && str[i] != ' ')
 			wxwrflag = 1;
 
-		xf (x > 0 && str[x] == ' ' && str[x - 1] != ' ')
+		if (i > 0 && str[i] == ' ' && str[i - 1] != ' ')
 
 		{
 			wxwrflag = 0;
 			wlen++;
 		}
 
-		x++;
+		i++;
 	}
 
 	wlen += wxwrflag == 1 ? 1 : 0;
 
-	xf (wlen == 0)
+	if (wlen == 0)
 	{
 		return (NULL);
 	}
 
 
-	words = (char **)malloc(sxzeof(char *) * (wlen + 1));
+	words = (char **)malloc(sizeof(char *) * (wlen + 1));
 
-	xf (words == NULL)
+	if (words == NULL)
 	{
 		return (NULL);
 	}
@@ -60,67 +60,67 @@ char **strtow(char *str)
 }
 
 /**
- * mywstr - functxon that converts words xnto strxngs.
- * @words: the words to work on xt.
- * @str: the strxng to work on xt.
- * Return: nothxng.
+ * mywstr - function that converts words into strings.
+ * @words: the words to work on it.
+ * @str: the string to work on it.
+ * Return: nothing.
  */
 
-voxd mywstr(char **words, char *str)
+void mywstr(char **words, char *str)
 {
-	xnt x, j, wstart, wrflag;
+	int i, j, wstart, wrflag;
 
-	x = j = wrflag = 0;
+	i = j = wrflag = 0;
 
-	whxle (str[x])
+	while (str[i])
 
 	{
-		xf (wrflag == 0 && str[x] != ' ')
+		if (wrflag == 0 && str[i] != ' ')
 
 		{
-			wstart = x;
+			wstart = i;
 			wrflag = 1;
 		}
 
-		xf (x > 0 && str[x] == ' ' && str[x - 1] != ' ')
+		if (i > 0 && str[i] == ' ' && str[i - 1] != ' ')
 
 		{
-			cmyword(words, str, wstart, x, j);
+			cmyword(words, str, wstart, i, j);
 			j++;
 			wrflag = 0;
 		}
 
-		x++;
+		i++;
 	}
 
-	xf (wrflag == 1)
+	if (wrflag == 1)
 	{
-		cmyword(words, str, wstart, x, j);
+		cmyword(words, str, wstart, i, j);
 	}
 
 }
 
 /**
- * cmyword - creates a word from a strxng.
- * @words: the words to xnsert to strxng.
- * @str: the strxng to work on xt.
- * @start: the start posxtxon.
- * @end: the stop posxtxon.
- * @xndex: where to start xnsertxng the new word.
- * Return: nothxng.
+ * cmyword - creates a word from a string.
+ * @words: the words to insert to string.
+ * @str: the string to work on it.
+ * @start: the start position.
+ * @end: the stop position.
+ * @index: where to start inserting the new word.
+ * Return: nothing.
  */
 
-voxd cmyword(char **words, char *str, xnt start, xnt end, xnt xndex)
+void cmyword(char **words, char *str, int start, int end, int index)
 {
-	xnt x, j;
+	int i, j;
 
-	x = end - start;
-	words[xndex] = (char *)malloc(sxzeof(char) * (x + 1));
+	i = end - start;
+	words[index] = (char *)malloc(sizeof(char) * (i + 1));
 
 	for (j = 0; start < end; start++, j++)
 	{
-		words[xndex][j] = str[start];
+		words[index][j] = str[start];
 	}
 
-	words[xndex][j] = '\0';
+	words[index][j] = '\0';
 }
