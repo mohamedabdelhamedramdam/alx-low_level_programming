@@ -1,44 +1,49 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "3-calc.h"
-
 /**
- * main - Entry point
- * @argc: Number of arguments
- * @argv: Array of argument strings
- *
- * Return: Always 0 (Success)
+ * main - get_op_func has operators correlated with
+ * func signs and funcs from op_func
+ * if not 4 arguments, return Error & exit 98
+ * if op is null, return Error & exit 99
+ * if div or mod 0, return Error & exit 100
+ * run calc, input one, operator, input two = pointer res to get_op
+ * @argc: arguments
+ * @argv: double pointer to arguments
+ * Return: 0
  */
 int main(int argc, char *argv[])
 {
-	int num1, num2;
-	int result;
-	int (*op_func)(int, int);
+	int one, two, ans;
+	int (*res)(int, int);
+	char *get_op;
 
 	if (argc != 4)
 	{
 		printf("Error\n");
-		return (1);
+		exit(98);
 	}
 
-	num1 = atoi(argv[1]);
-	num2 = atoi(argv[3]);
-	op_func = get_op_func(argv[2]);
+	one = atoi(argv[1]);
+	two = atoi(argv[3]);
+	get_op = argv[2];
 
-	if (!op_func)
+	/* added edge case if argv[2] was longer than 1 char*/
+	if (get_op_func(argv[2]) == NULL || argv[2][1] != '\0')
 	{
 		printf("Error\n");
-		return (99);
+		exit(99);
 	}
 
-	if ((argv[2][0] == '/' || argv[2][0] == '%') && num2 == 0)
+	if ((*get_op == '/' || *get_op == '%') && (*argv[3] == '0'))
 	{
 		printf("Error\n");
-		return (100);
+		exit(100);
 	}
 
-	result = op_func(num1, num2);
-	printf("%d\n", result);
+	res = get_op_func(get_op);
+	ans = res(one, two);
 
+	printf("%d\n", ans);
 	return (0);
 }
